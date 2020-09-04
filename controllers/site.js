@@ -52,7 +52,7 @@ class SiteController {
   static deleteSite(req, res) {
     const { id } = req.params;
 
-    Site.findOneAndDelete({ siteId: id })
+    Site.findOneAndDelete({ _id: id })
       .then(order => {
         return res.status(200).json({ message: `Success delete Site with ID ${id}` });
       })
