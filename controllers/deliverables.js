@@ -15,7 +15,7 @@ class DeliverablesController {
 
   static readAllDeliverables(req, res) {
     Deliverables.find()
-      .sort('deliverablesID')
+      .sort('_id')
       .then(data => {
         return res.status(200).json(data);
       })
@@ -27,7 +27,7 @@ class DeliverablesController {
   static readOneDeliverables(req, res) {
     const { id } = req.params;
 
-    Deliverables.findOne({ deliverablesID: id })
+    Deliverables.findOne({ _id: id })
       .then(data => {
         return res.status(200).json(data);
       })
@@ -40,7 +40,7 @@ class DeliverablesController {
     const { id } = req.params;
     const { customerPO, siteId, siteName, deliverablesType, installationStart } = req.body;
 
-    Deliverables.findOneAndUpdate({ deliverablesID: id }, { customerPO, siteId, siteName, deliverablesType, installationStart }, { new: true, runValidators: true })
+    Deliverables.findOneAndUpdate({ _id: id }, { customerPO, siteId, siteName, deliverablesType, installationStart }, { new: true, runValidators: true })
       .then(data => {
         return res.status(200).json(data);
       })
@@ -52,7 +52,7 @@ class DeliverablesController {
   static deleteDeliverables(req, res) {
     const { id } = req.params;
 
-    Deliverables.findOneAndDelete({ deliverablesID: id })
+    Deliverables.findOneAndDelete({ _id: id })
       .then(data => {
         return res.status(200).json({ message: `Success delete Deliverables with ID ${id}` });
       })

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const autoIncrement = require('mongoose-auto-increment');
-mongoose.connect('mongodb://localhost/interview-test-database', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/interview-test-database', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 autoIncrement.initialize(mongoose.connection);
 
 const db = mongoose.connection;
@@ -12,11 +12,11 @@ db.once('open', function() {
 const Schema = mongoose.Schema;
 
 const customerPOSchema = new Schema({
-  customerPO: {
-    type: Number,
-    required: true,
-    unique: true
-  },
+  // customerPO: {
+  //   type: Number,
+  //   required: true,
+  //   unique: true
+  // },
   price: {
     type: Number,
     required: true,
@@ -31,18 +31,18 @@ const customerPOSchema = new Schema({
 
 customerPOSchema.plugin(autoIncrement.plugin, {
   model: 'CustomerPO',
-  field: 'customerPO',
+  // field: 'customerPO',
   startAt: 111111,
   incrementBy: 1
 });
 const CustomerPO = mongoose.model('CustomerPO', customerPOSchema);
 
 const siteSchema = new Schema({
-  siteId: {
-    type: Number,
-    required: true,
-    unique: true
-  },
+  // siteId: {
+  //   type: Number,
+  //   required: true,
+  //   unique: true
+  // },
   siteName: {
     type: String,
     required: true
@@ -55,25 +55,30 @@ const siteSchema = new Schema({
 
 siteSchema.plugin(autoIncrement.plugin, {
   model: 'Site',
-  field: 'siteId',
+  // field: 'siteId',
   startAt: 1,
   incrementBy: 1
 });
 const Site = mongoose.model('Site', siteSchema);
 
 const deliverablesSchema = new Schema({
-  deliverablesID: {
-    type: Number,
-    required: true,
-    unique: true
-  },
+  // deliverablesID: {
+  //   type: Number,
+  //   required: true,
+  //   unique: true
+  // },
   customerPO: {
-    type: Schema.Types.ObjectId, 
+    type: Number, 
     ref: 'CustomerPO',
     required: true
   },
   siteId: {
-    type: Schema.Types.ObjectId, 
+    type: Number, 
+    ref: 'Site',
+    required: true
+  },
+  siteName: {
+    type: String, 
     ref: 'Site',
     required: true
   },
@@ -84,7 +89,7 @@ const deliverablesSchema = new Schema({
   },
   installationStart: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
     required: true
   },
   installationFinish: {
@@ -94,7 +99,7 @@ const deliverablesSchema = new Schema({
 
 deliverablesSchema.plugin(autoIncrement.plugin, {
   model: 'Deliverables',
-  field: 'deliverablesID',
+  // field: 'deliverablesID',
   startAt: 1,
   incrementBy: 1
 });

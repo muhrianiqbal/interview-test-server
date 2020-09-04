@@ -15,7 +15,7 @@ class SiteController {
 
   static readAllSite(req, res) {
     Site.find()
-      .sort('siteId')
+      .sort('_id')
       .then(sites => {
         return res.status(200).json(sites);
       })
@@ -27,7 +27,7 @@ class SiteController {
   static readOneSite(req, res) {
     const { id } = req.params;
 
-    Site.findOne({ siteId: id })
+    Site.findOne({ _id: id })
       .then(site => {
         return res.status(200).json(site);
       })
@@ -38,9 +38,9 @@ class SiteController {
 
   static updateSite(req, res) {
     const { id } = req.params;
-    const { siteName, Address } = req.body;
+    const { siteName, address } = req.body;
 
-    Site.findOneAndUpdate({ siteId: id }, { siteName, Address }, { new: true, runValidators: true })
+    Site.findOneAndUpdate({ _id: id }, { siteName, address }, { new: true, runValidators: true })
       .then(site => {
         return res.status(200).json(site);
       })
